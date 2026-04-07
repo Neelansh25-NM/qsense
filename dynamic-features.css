@@ -1,0 +1,310 @@
+/* dynamic-features.css */
+
+/* 1. Global Reset & Typography */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f7fafc; /* Q-Sense background from image_12.png */
+    color: #333;
+    overflow-x: hidden; /* Prevent horizontal scroll from full-width content */
+}
+
+/* 2. Main Column Container: Setting the flex direction */
+.features-column-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    margin-top: 60px; /* Space from top nav if present */
+}
+
+/* 3. Section Styling: Full-width modals across the screen breadth */
+.feature-section {
+    width: 100%;
+    padding: 10vh 10vw; /* Using viewport units for spacing */
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Split for animation and text */
+    gap: 5vw;
+    align-items: center;
+}
+
+/* Mobile responsive layout */
+@media (max-width: 900px) {
+    .feature-section {
+        grid-template-columns: 1fr;
+        padding: 5vh 5vw;
+        text-align: center;
+    }
+}
+
+/* 4. Content Area Styling */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.icon-holder {
+    font-size: 3rem; /* Large icon display */
+    margin-bottom: 1rem;
+}
+
+.content-wrapper h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+.content-wrapper p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #4a5568;
+    max-width: 600px;
+}
+
+@media (max-width: 900px) {
+    .content-wrapper p {
+        margin: 0 auto;
+    }
+}
+
+.lottie-credit {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-top: 1rem;
+}
+
+.lottie-credit a {
+    color: #3182ce; /* Match button blue */
+    text-decoration: underline;
+}
+
+/* ==========================================================
+   ANIMATIONS
+   ========================================================== */
+
+/* 5. Section 1: Stick Figure & Phone Popup */
+.animation-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stick-figure-phone-animation {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+.person {
+    position: absolute;
+    bottom: 0;
+    left: 100px;
+    width: 50px;
+    height: 150px;
+    background-color: #4a5568; /* Stick figure gray */
+    border-radius: 25px;
+    animation: walkPerson 4s infinite linear;
+}
+
+.phone {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 100px;
+    height: 180px;
+    background-color: #1a202c; /* Black phone */
+    border-radius: 15px;
+    border: 5px solid #2d3748;
+}
+
+.popup-waitlist {
+    position: absolute;
+    top: -20px;
+    left: -120px;
+    width: 200px;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: popupFade 4s infinite linear;
+    transform: scale(0.8);
+}
+
+.you-are-here {
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.wait-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ed8936; /* Orange status text */
+}
+
+/* Popup Animation Keyframes */
+@keyframes popupFade {
+    0%, 20% { opacity: 0; transform: scale(0.8); }
+    30%, 80% { opacity: 1; transform: scale(1); }
+    90%, 100% { opacity: 0; transform: scale(0.8); }
+}
+
+@keyframes walkPerson {
+    0% { left: 100px; }
+    50% { left: 150px; }
+    100% { left: 100px; }
+}
+
+/* 6. Section 2: Smart Allocation & Drag-and-Drop Simulation */
+.admin-allocation-sim {
+    position: relative;
+    width: 400px;
+    height: 250px;
+    background-color: #f7fafc;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+}
+
+.res-item {
+    background-color: #fff;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 0.5rem;
+}
+
+.res-item.incoming.active {
+    background-color: #3182ce; /* Match Primary blue from image_13.png */
+    color: #fff;
+    font-weight: 600;
+    position: relative;
+    z-index: 5;
+    /* Fluid drag animation starting from list position */
+    animation: dragToTable 6s infinite;
+}
+
+.table-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.table {
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    color: #fff;
+    border: 1px solid #e2e8f0;
+}
+
+.table::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -1.2rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #718096;
+}
+
+/* Color codes matching floors plan from image_13.png */
+.table-vacant.active {
+    background-color: #48bb78; /* Vacant green */
+    border-color: #38a169;
+}
+
+.table-occupied {
+    background-color: #e53e3e; /* Occupied red */
+    border-color: #c53030;
+}
+
+.table-reserved {
+    background-color: #ecc94b; /* Reserved yellow */
+    border-color: #d69e2e;
+}
+
+/* Pulse animation on T1 where Sherman will be allocated */
+.table-vacant.active {
+    animation: tablePulse 6s infinite;
+}
+
+/* Line indicator from list to T1 */
+.allocation-line {
+    position: absolute;
+    top: 60px;
+    left: 130px;
+    width: 200px;
+    height: 3px;
+    background-color: #3182ce;
+    border-radius: 2px;
+    opacity: 0;
+    animation: lineFade 6s infinite;
+}
+
+/* Interface dots matching color codes */
+.interface-dots {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.dot.green { background-color: #48bb78; }
+.dot.red { background-color: #e53e3e; }
+.dot.yellow { background-color: #ecc94b; }
+
+/* Allocation Animation Keyframes */
+@keyframes dragToTable {
+    0%, 10% { transform: translate(0, 0) scale(1); opacity: 1; }
+    /* Start drag movement */
+    30% { transform: translate(150px, -20px) scale(0.9); opacity: 0.8; }
+    /* Complete drag movement into T1 vacant spot */
+    50%, 80% { transform: translate(250px, -20px) scale(0.9); opacity: 0; }
+    /* Reset and loop */
+    90%, 100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+@keyframes tablePulse {
+    0%, 50% { background-color: #48bb78; }
+    /* Sherman allocated - brief color pulse indicator */
+    60%, 70% { background-color: #38a169; box-shadow: 0 0 10px #48bb78; }
+    80%, 100% { background-color: #48bb78; }
+}
+
+@keyframes lineFade {
+    0%, 30% { opacity: 0; width: 0; }
+    /* Drag completes - line appears to show connection */
+    40%, 80% { opacity: 0.5; width: 200px; }
+    90%, 100% { opacity: 0; width: 0; }
+}
+
+/* 7. Full-width Section Specific background colors for flow */
+.section-waitlist { background-color: #f7fafc; } /* Off-white for visual flow */
+.section-allocation { background-color: #fff; } /* Clean white for admin simulation */
+.section-security { background-color: #edf2f7; } /* Subtle gray for contrast */
